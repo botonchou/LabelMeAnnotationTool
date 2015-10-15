@@ -7,3 +7,9 @@ annotationTools/scribble/segment.cgi
 annotationTools/scribble/image.jpg
 annotationTools/scribble/mask.png
 annotationTools/scribble/scribble.png
+Annotations/*
+Masks/*
+Scribbles/*
+Images/*
+annotationTools/scribble/segmentCPP/images/*
+annotationCache/*
