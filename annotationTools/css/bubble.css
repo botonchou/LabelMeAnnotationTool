@@ -91,5 +91,74 @@
 	border-color:transparent #f00;
 }
 
+.bubble {
+  width: 440px;
+}
 
+textarea:focus, input:focus {
+  outline: 0;
+  background-color: rgba(255,246,246,1);
+}
 
+textarea:hover, input:hover {
+  background-color: rgba(255,246,246,0.5);
+}
+
+.bubble .commonly_used_labels > div {
+  width: 18%;
+  float: left;
+  margin: 3px;
+  text-align: center;
+}
+
+.bubble .commonly_used_labels > div > div, textarea, input {
+  border: 1px solid #aaa;
+  border-radius: 2px;
+  font-size: 16px;
+  margin: 4px;
+  padding: 4px;
+  box-sizing: border-box;
+
+  -webkit-transition: background-color ease-out 0.2s;
+     -moz-transition: background-color ease-out 0.2s;
+       -o-transition: background-color ease-out 0.2s;
+          transition: background-color ease-out 0.2s;
+}
+
+.bubble .commonly_used_labels > div > div {
+  cursor: pointer;
+  padding: 2px;
+}
+
+.bubble .commonly_used_labels .green:hover  { background-color: rgba(118,175, 93,0.3); }
+.bubble .commonly_used_labels .blue:hover   { background-color: rgba(163,199,233,0.3); }
+.bubble .commonly_used_labels .gray:hover   { background-color: rgba(193,193,193,0.3); }
+.bubble .commonly_used_labels .red:hover    { background-color: rgba(235,159,159,0.3); }
+.bubble .commonly_used_labels .yellow:hover { background-color: rgba(255,230,157,0.3); }
+
+.bubble .commonly_used_labels .green  { border-color: rgba(118,175, 93,1); }
+.bubble .commonly_used_labels .blue   { border-color: rgba(163,199,233,1); }
+.bubble .commonly_used_labels .gray   { border-color: rgba(193,193,193,1); }
+.bubble .commonly_used_labels .red    { border-color: rgba(235,159,159,1); }
+.bubble .commonly_used_labels .yellow { border-color: rgba(255,230,157,1); }
+
+.bubble .commonly_used_labels .green  { background-color: rgba(118,175, 93,0.1); }
+.bubble .commonly_used_labels .blue   { background-color: rgba(163,199,233,0.1); }
+.bubble .commonly_used_labels .gray   { background-color: rgba(193,193,193,0.1); }
+.bubble .commonly_used_labels .red    { background-color: rgba(235,159,159,0.1); }
+.bubble .commonly_used_labels .yellow { background-color: rgba(255,230,157,0.1); }
+
+.bubble .button-group input[type=button] {
+  font-size: larger;
+  width: 48%;
+  margin: 3px;
+}
+
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

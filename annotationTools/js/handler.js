@@ -81,6 +81,10 @@ function handler() {
 	if(document.getElementById('attributes')) new_attributes = RemoveSpecialChars(document.getElementById('attributes').value);
 	else new_attributes = RemoveSpecialChars(adjust_attributes);
       }
+      else {
+	new_attributes = "";
+	new_occluded = "no";
+      }
       
       StopEditEvent();
       
@@ -99,7 +103,6 @@ function handler() {
       
       // Insert attributes (and create field if it is not there):
       LMsetObjectField(LM_xml, obj_ndx, "attributes", new_attributes);
-        
       
       LMsetObjectField(LM_xml, obj_ndx, "occluded", new_occluded);
       

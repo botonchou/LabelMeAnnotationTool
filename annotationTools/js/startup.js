@@ -268,8 +268,8 @@ function InitializeAnnotationTools(tag_button, tag_canvas){
         </button> ';
     html_str += '</div>';
 
-    if (!video_mode){
-      html_str += '<div id= "segmDiv" class="annotatemenu">Mask<br></br>Tool \
+    if (!video_mode && scribble_mode){
+      html_str += '<div id="segmDiv" class="annotatemenu">Mask<br></br>Tool \
         <button id="ScribbleObj" class="labelBtnDraw" type="button" title="Use the red pencil to mark areas inside the object you want to segment" onclick="scribble_canvas.setCurrentDraw(OBJECT_DRAWING)" > \
         <img src="Icons/object.png" width="28" height="38" /></button> \
         <button id="ScribbleBg" class="labelBtnDraw" type="button" title="Use the blue pencil to mark areas outside the object" onclick="scribble_canvas.setCurrentDraw(BG_DRAWING)" > \

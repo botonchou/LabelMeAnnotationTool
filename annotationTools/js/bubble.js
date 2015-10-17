@@ -134,22 +134,26 @@ function GetPopupFormDraw(scribble_form) {
     html_str += HTMLattributesBox("");
   }
   if(use_parts) {
-    html_str += HTMLpartsBox("");
+    html_str += "<div>" + HTMLpartsBox("") + "</div>";
   }
   html_str += "<br />";
   
+  var buttons = "<div>";
   // Done button:
-  html_str += '<input type="button" value="Done" title="Press this button after you have provided all the information you want about the object." onclick="main_handler.SubmitQuery();" tabindex="0" />';
+  buttons += '<input type="button" value="Done" title="Press this button after you have provided all the information you want about the object." onclick="main_handler.SubmitQuery();" tabindex="0" />';
   
   // Undo close button/Keep editting
-  if (!scribble_form) html_str += '<input type="button" value="Undo close" title="Press this button if you accidentally closed the polygon. You can continue adding control points." onclick="UndoCloseButton();" tabindex="0" />';
-  else html_str += '<input type="button" value="Edit Scribble" title="Press this button if to keep adding scribbles." onclick="KeepEditingScribbles();" tabindex="0" />';
+  if (!scribble_form) buttons += '<input type="button" value="Undo close" title="Press this button if you accidentally closed the polygon. You can continue adding control points." onclick="UndoCloseButton();" tabindex="0" />';
+  else buttons += '<input type="button" value="Edit Scribble" title="Press this button if to keep adding scribbles." onclick="KeepEditingScribbles();" tabindex="0" />';
   // Add parts/Stop adding parts
-  if (add_parts_to == null) html_str += '<input type="button" value="Add parts" title="Press this button if you want to start adding parts" onclick="main_handler.StartAddParts();" tabindex="0" />';
-  else html_str += '<input type="button" value="Stop parts" title="Press this button if you want to stop adding parts" onclick="main_handler.StopAddParts();" tabindex="0" />';
+  if (add_parts_to == null) buttons += '<input type="button" value="Add parts" title="Press this button if you want to start adding parts" onclick="main_handler.StartAddParts();" tabindex="0" />';
+  else buttons += '<input type="button" value="Stop parts" title="Press this button if you want to stop adding parts" onclick="main_handler.StopAddParts();" tabindex="0" />';
     
   // Delete button:
-  html_str += '<input type="button" value="Delete" title="Press this button if you wish to delete the polygon." onclick="main_handler.WhatIsThisObjectDeleteButton();" tabindex="0" />';
+  buttons += '<input type="button" value="Delete" title="Press this button if you wish to delete the polygon." onclick="main_handler.WhatIsThisObjectDeleteButton();" tabindex="0" />';
+  buttons += '</div>';
+
+  html_str += '<div class="button-group">' + buttons + '</div>';
   
   return html_str;
 }
@@ -164,7 +168,7 @@ function GetPopupFormEdit(anno) {
   var occluded = LMgetObjectField(LM_xml,anno.anno_id,'occluded');
   var parts = LMgetObjectField(LM_xml, anno.anno_id, 'parts');
   
-  html_str = "<b>Enter object name</b><br />"; 
+  html_str = "<b>Enter object name: </b><br />"; 
   html_str += HTMLobjectBox(obj_name);
   
   if(use_attributes) {
@@ -174,34 +178,40 @@ function GetPopupFormEdit(anno) {
   }
   
   if(use_parts) {
-    html_str += HTMLpartsBox(parts);
+    html_str += "<div>" + HTMLpartsBox("") + "</div>";
   }
   
   html_str += "<br />";
+
+  var buttons = "<div>";
   
   // Done button:
-  if (video_mode) html_str += '<input type="button" value="Done" title="Press this button when you are done editing." onclick="main_media.SubmitEditObject();" tabindex="0" />';
-  
-  else html_str += '<input type="button" value="Done" title="Press this button when you are done editing." onclick="main_handler.SubmitEditLabel();" tabindex="0" />';
+  if (video_mode)
+    buttons += '<input type="button" value="Done" title="Press this button when you are done editing." onclick="main_media.SubmitEditObject();" tabindex="0" />';
+  else
+    buttons += '<input type="button" value="Done" title="Press this button when you are done editing." onclick="main_handler.SubmitEditLabel();" tabindex="0" />';
   
   /*************************************************************/
   /*************************************************************/
   // Scribble: if anno.GetType() != 0 then scribble mode:
 
   // Adjust polygon button:
-  if (anno.GetType() == 0) {
-    html_str += '<input type="button" value="Adjust polygon" title="Press this button if you wish to update the polygon\'s control points." onclick="javascript:AdjustPolygonButton();" />';
-  }
-  else {
-    html_str += '<input type="button" value="Edit Scribbles" title="Press this button if you wish to update the segmentation." onclick="javascript:EditBubbleEditScribble();" />';  
-  }
+  if (anno.GetType() == 0)
+    buttons += '<input type="button" value="Adjust polygon" title="Press this button if you wish to update the polygon\'s control points." onclick="javascript:AdjustPolygonButton();" />';
+  else
+    buttons += '<input type="button" value="Edit Scribbles" title="Press this button if you wish to update the segmentation." onclick="javascript:EditBubbleEditScribble();" />';  
   /*************************************************************/
   /*************************************************************/
+  buttons += '</div>';
   
   // Add parts/Stop adding parts
-  if (add_parts_to == null) html_str += '<input type="button" value="Add parts" title="Press this button if you want to start adding parts" onclick="main_handler.StartAddParts();" tabindex="0" />';
+  if (add_parts_to == null)
+    buttons += '<input type="button" value="Add parts" title="Press this button if you want to start adding parts" onclick="main_handler.StartAddParts();" tabindex="0" />';
+
   // Delete button:
-  html_str += '<input type="button" value="Delete" title="Press this button if you wish to delete the polygon." onclick="main_handler.EditBubbleDeleteButton();" tabindex="0" />';
+  buttons += '<input type="button" value="Delete" title="Press this button if you wish to delete the polygon." onclick="main_handler.EditBubbleDeleteButton();" tabindex="0" />';
+
+  html_str += '<div class="button-group">' + buttons + '</div>';
   
   return html_str;
 }
@@ -214,8 +224,38 @@ function GetPopupFormEdit(anno) {
 function HTMLobjectBox(obj_name) {
   var html_str="";
   
-  html_str += '<input name="objEnter" id="objEnter" type="text" style="width:260px;" tabindex="0" value="'+obj_name+'" title="Enter the object\'s name here. Avoid application specific names, codes, long descriptions. Use a name you think other people would agree in using. "';
+  var categories = {
+    vegetation: {
+      labels: ['grass', 'bushes', 'trees'],
+      color: 'green'
+    },
+    sky: {
+      labels: ['sky'],
+      color: 'blue'
+    },
+    trail: {
+      labels: ['rocky', 'gravel', 'smooth', 'mud', 'puddle', 'rut'],
+      color: 'gray'
+    },
+    obstacle: {
+      labels: ['person', 'car', 'garbage', 'fence', 'stone', 'others'],
+      color: 'red'
+    },
+    mound: {
+      labels: ['mound'],
+      color: 'yellow'
+    }
+  };
   
+  var categories_html = "";
+  for (var key in categories) {
+    var category = categories[key];
+    categories_html += "<div>" + category.labels.map(function (label) {
+      return "<div class='label " + category.color + "' onclick=''>" + label + "</div>";
+    }).join('') + "</div>";
+  }
+
+  html_str += '<input name="objEnter" id="objEnter" type="text" tabindex="0" value="'+obj_name+'" title="Enter the object\'s name here. Avoid application specific names, codes, long descriptions. Use a name you think other people would agree in using. "';
   html_str += ' onkeyup="var c;if(event.keyCode)c=event.keyCode;if(event.which)c=event.which;if(c==13)';
         
   // if obj_name is empty it means that the box is being created
@@ -242,11 +282,18 @@ function HTMLobjectBox(obj_name) {
     }
     html_str += '</select></datalist>';
   }
+
+  html_str += '<div class="commonly_used_labels noselect">' + categories_html + '</div>';
   
   html_str += '<br />';
   
   return html_str;
 }
+
+$(document).on('click', '#myPopup > div.commonly_used_labels > div > div', function (e) {
+  var label = $(e.target).html();
+  $('#objEnter').val(label);
+});
 
 // ****************************
 // ATTRIBUTES:
@@ -289,6 +336,8 @@ function HTMLattributesBox(attList) {
 // PARTS:
 // ****************************
 function HTMLpartsBox(parts) {
+  return "";
+
   var html_str="";
   if (parts.length>0) {
     if (parts.length==1) {
