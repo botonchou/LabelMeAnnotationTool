@@ -295,7 +295,7 @@ function annotation(anno_id) {
     this.ClosestPoint = function (x,y) {
         var eps = 1e-3;
         var shortestDist = Infinity;
-        var pt = new Array(5);
+        var pt = new Array(4);
         var xs = this.GetPtsX();
         var ys = this.GetPtsY();
         var thisdist;
@@ -325,15 +325,14 @@ function annotation(anno_id) {
                     pt[0] = xt;
                     pt[1] = yt;
                     pt[2] = thisdist;
-		    pt[3] = i;
-		    pt[4] = j;
+		    pt[3] = {i: i, j: j};
                 }
             }
         }
-	pt.push({
+	pt[4] = {
 	  xs: xs,
 	  ys: ys
-	});
+	};
         return pt;
     };
     

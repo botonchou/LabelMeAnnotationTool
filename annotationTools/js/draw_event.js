@@ -98,8 +98,8 @@ function DrawCanvasMouseDown(event, x, y) {
 
   // Get (x,y) mouse location:
   var scale = main_media.GetImRatio();
-  x = x || Math.round(GetEventPosX(event)/scale);
-  y = y || Math.round(GetEventPosY(event)/scale);
+  x = (typeof x != 'undefined') ? x : Math.round(GetEventPosX(event)/scale);
+  y = (typeof y != 'undefined') ? y : Math.round(GetEventPosY(event)/scale);
   // var x = Math.round(GetEventPosX(event)/scale);
   // var y = Math.round(GetEventPosY(event)/scale);
 

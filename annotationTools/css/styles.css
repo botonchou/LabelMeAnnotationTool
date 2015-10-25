@@ -24,6 +24,15 @@ top:8px; right:8px; width:16em;}
 top:2em;}
 #main_media {position:absolute; left:0; top:0; border: 1px solid #979797;}
 
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 #framebar{
 height:80px;
 position:relative;

@@ -106,6 +106,7 @@ function StopEditEvent() {
   $('#select_canvas_div').css('z-index','-2');
   
   // Remove polygon from the select canvas:
+  console.log('select_anno: ', select_anno);
   if (!video_mode) select_anno.DeletePolygon();
   else $('#'+select_anno.polygon_id).remove();
   var anno = select_anno;

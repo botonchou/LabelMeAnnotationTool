@@ -5,7 +5,7 @@ var saveCanvas;
 var saveScribbleCanvas;
 var localop = false;
 //Module.TOTAL_MEMORY = 7108864;
-grabCut = Module.cwrap(
+grabCut = (typeof Module != 'undefined') && Module.cwrap(
     'grabCut', 'string', ['number', 'number', 'number', 'number', 'number']
 );
 
