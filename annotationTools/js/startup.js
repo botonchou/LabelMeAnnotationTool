@@ -61,18 +61,7 @@ function StartupLabelMe() {
     $('html').append('<body><p><img src="Icons/LabelMe.gif" /></p><br /><p>Sorry!  This page only works with Mozilla Firefox, Chrome, and Internet Explorer.  We may support other browsers in the future.</p><p><a href="http://www.mozilla.org">Download Mozilla Firefox?</a></p></body>');
   }
 
-  registerHotKey();
-}
-
-function registerHotKey() {
-
-  $(window).on('keydown', function (e) {
-    switch (e.keyCode) {
-      case 27:	// Esc key:
-	main_handler.EraseSegment();
-	break;
-    }
-  });
+  $(window).on('keydown', parent.onKeyDown);
 }
 
 /** This function gets called if the annotation has been successfully loaded.
