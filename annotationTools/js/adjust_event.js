@@ -131,8 +131,8 @@ function AdjustEvent(dom_attach,x,y,obj_name,ExitFunction,scale, bounding_box_an
     $('#'+this.polygon_id).parent().remove();
 
     // Remove key press action
-    $(window).unbind("keydown");
-    $(window).unbind("keyup");
+    // $(window).unbind("keydown");
+    // $(window).unbind("keyup");
     // Remove control points and center of mass point: 
     this.RemoveControlPoints();
     this.RemoveCenterOfMass();
