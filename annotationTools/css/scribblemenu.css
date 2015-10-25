@@ -3,6 +3,7 @@
 /* THE SCRIBBLE MENU ----------------------------------------------- */
 
 .annotatemenu {
+	display: none !important;
 	position:relative;
         top:0px;
 	background-color:#fff;

@@ -218,6 +218,7 @@ function handler() {
     this.CanvasMouseMove = function (event,pp) {
         var x = GetEventPosX(event);
         var y = GetEventPosY(event);
+	console.log(x, y);
         if(IsNearPolygon(x,y,pp)) selectObject(pp);
         else unselectObjects();
     };

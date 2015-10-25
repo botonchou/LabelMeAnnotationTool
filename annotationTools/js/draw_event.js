@@ -86,11 +86,11 @@ function DrawCanvasMouseMove(event){
 }
 /** Handles when the user presses the mouse button down on the drawing
 canvas. */
-function DrawCanvasMouseDown(event) {
+function DrawCanvasMouseDown(event, x, y) {
 
   // User right-clicked mouse, so close polygon and return:
 
-  if(event.button > 1 && !bounding_box) return DrawCanvasClosePolygon();
+  if(event && event.button > 1 && !bounding_box) return DrawCanvasClosePolygon();
 
   // Else, the user left-clicked the mouse.
   if(active_canvas!=DRAW_CANVAS) return;
@@ -98,8 +98,10 @@ function DrawCanvasMouseDown(event) {
 
   // Get (x,y) mouse location:
   var scale = main_media.GetImRatio();
-  var x = Math.round(GetEventPosX(event)/scale);
-  var y = Math.round(GetEventPosY(event)/scale);
+  x = x || Math.round(GetEventPosX(event)/scale);
+  y = y || Math.round(GetEventPosY(event)/scale);
+  // var x = Math.round(GetEventPosX(event)/scale);
+  // var y = Math.round(GetEventPosY(event)/scale);
 
   // Add point to polygon:
   
@@ -248,6 +250,7 @@ function UndoCloseButton() {
  valid in the drop-down list (2) erases the last control point.
 */
 function StopDrawEvent() {
+  parent.destroyBoundaryReUsage();
   // Set active canvas:
   active_canvas = REST_CANVAS;
   if (video_mode) oVP.Play();

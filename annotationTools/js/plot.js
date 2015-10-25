@@ -109,6 +109,7 @@ function DrawLineSegment(element_id,x1,y1,x2,y2,attr,scale) {
   
 // Draw a point.
 function DrawPoint(element_id,x,y,attr,scale) {
+  parent.initBoundaryReUsage();
   // Get drawn object DOM element id:
   var dom_id = element_id + '_point' + $('#'+element_id).children().length;
 

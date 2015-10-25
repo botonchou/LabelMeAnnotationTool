@@ -181,6 +181,7 @@ function SetObjectChoicesPointLine(num_control_points) {
 
 // Returns true if the point (x,y) is close to polygon p.
 function IsNearPolygon(x,y,p) {
+  console.log('p: ', p);
   var sx = x / main_media.GetImRatio();
   var sy = y / main_media.GetImRatio();
   

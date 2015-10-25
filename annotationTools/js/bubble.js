@@ -43,11 +43,10 @@ function CreatePopupBubble(left,top,innerHTML,dom_attach) {
   // Place bubble in the right location taking into account the rendered size and the location of the arrow
   if(top > 214) {  
     h = $('#'+bubble_name).height();
-    document.getElementById(bubble_name).style.top = (top-h-80) + 'px';
+    top = Math.max(top-h-80, 0);
   }
-  else {
-    document.getElementById(bubble_name).style.top = (top) + 'px';
-  }
+  document.getElementById(bubble_name).style.top = top + 'px';
+
   setTimeout("$('#objEnter').focus();",1);
   return bubble_name;
 }
@@ -119,6 +118,9 @@ function CloseEditPopup() {
 // ****************************
 
 function GetPopupFormDraw(scribble_form) {
+
+  parent.showLabelingPanel({action: "new"});
+
   wait_for_input = 1;
   part_bubble = false;
   html_str = "<b>Enter object name</b><br />";
@@ -130,7 +132,6 @@ function GetPopupFormDraw(scribble_form) {
   
   if(use_attributes) {
     html_str += HTMLoccludedBox("");
-    html_str += "<b>Enter attributes</b><br />";
     html_str += HTMLattributesBox("");
   }
   if(use_parts) {
@@ -159,6 +160,9 @@ function GetPopupFormDraw(scribble_form) {
 }
 
 function GetPopupFormEdit(anno) {
+
+  parent.showLabelingPanel({action: "edit"});
+
   // get object name and attributes from 'anno'
   edit_popup_open =  1;
   part_bubble = false;
@@ -173,7 +177,6 @@ function GetPopupFormEdit(anno) {
   
   if(use_attributes) {
     html_str += HTMLoccludedBox(occluded);
-    html_str += "<b>Enter attributes</b><br />";
     html_str += HTMLattributesBox(attributes);
   }
   
@@ -183,7 +186,7 @@ function GetPopupFormEdit(anno) {
   
   html_str += "<br />";
 
-  var buttons = "<div>";
+  var buttons = "";
   
   // Done button:
   if (video_mode)
@@ -202,7 +205,7 @@ function GetPopupFormEdit(anno) {
     buttons += '<input type="button" value="Edit Scribbles" title="Press this button if you wish to update the segmentation." onclick="javascript:EditBubbleEditScribble();" />';  
   /*************************************************************/
   /*************************************************************/
-  buttons += '</div>';
+  buttons += '';
   
   // Add parts/Stop adding parts
   if (add_parts_to == null)
@@ -234,11 +237,11 @@ function HTMLobjectBox(obj_name) {
       color: 'blue'
     },
     trail: {
-      labels: ['rocky', 'gravel', 'smooth', 'mud', 'puddle', 'rut'],
+      labels: ['rocky', 'gravel', 'smooth', 'mud', 'puddle', 'rut', 'occluded'],
       color: 'gray'
     },
     obstacle: {
-      labels: ['person', 'car', 'garbage', 'fence', 'stone', 'others'],
+      labels: ['person', 'car', 'garbage', 'fence', 'stone', 'branch', 'building'],
       color: 'red'
     },
     mound: {
@@ -249,10 +252,17 @@ function HTMLobjectBox(obj_name) {
   
   var categories_html = "";
   for (var key in categories) {
-    var category = categories[key];
-    categories_html += "<div>" + category.labels.map(function (label) {
-      return "<div class='label " + category.color + "' onclick=''>" + label + "</div>";
-    }).join('') + "</div>";
+    var C = categories[key];
+
+    var buttons = "<div class='general label " + C.color + "' onclick=''>" + key + "</div>";
+
+    if (C.labels.length > 1) {
+      buttons += C.labels.map(function (label) {
+	return "<div class='label " + C.color + "' onclick=''>" + label + "</div>";
+      }).join('');
+    }
+
+    categories_html += "<div>" + buttons + "</div>";
   }
 
   html_str += '<input name="objEnter" id="objEnter" type="text" tabindex="0" value="'+obj_name+'" title="Enter the object\'s name here. Avoid application specific names, codes, long descriptions. Use a name you think other people would agree in using. "';
@@ -290,11 +300,6 @@ function HTMLobjectBox(obj_name) {
   return html_str;
 }
 
-$(document).on('click', '#myPopup > div.commonly_used_labels > div > div', function (e) {
-  var label = $(e.target).html();
-  $('#objEnter').val(label);
-});
-
 // ****************************
 // ATTRIBUTES:
 // ****************************
@@ -308,6 +313,8 @@ function HTMLoccludedBox(occluded) {
   if (!(occluded=="no" || occluded=="yes")) {
     occluded="no";
   }
+
+  html_str += "<div class='occluded'>";
   
   // the value of the selection is inside a hidden field:
   html_str += 'Is occluded? <input type="hidden" name="occluded" id="occluded" value="'+occluded+'"/>';
@@ -322,13 +329,16 @@ function HTMLoccludedBox(occluded) {
     html_str += '<input type="radio" name="rboccluded" id="rboccluded" value="no" checked="yes"  onclick="document.getElementById(\'occluded\').value=\'no\';" />no';
   }
   html_str += '<br />';
+  html_str += "</div>";
   
   return html_str;
 }
 
 // Boxes to enter attributes
 function HTMLattributesBox(attList) {    
-  return '<textarea name="attributes" id="attributes" type="text" style="width:260px; height:3em;" tabindex="0" title="Enter a comma separated list of attributes, adjectives or other object properties">'+attList+'</textarea>';
+  return "<div class='attributes'><b>Enter attributes</b><br />" +
+    '<textarea name="attributes" id="attributes" type="text" tabindex="0" title="Enter a comma separated list of attributes, adjectives or other object properties">'+attList+'</textarea>' +
+    "</div>";
 }
 
 

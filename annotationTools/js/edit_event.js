@@ -96,6 +96,7 @@ function StartEditEvent(anno_id,event) {
  * object in the object list, (6) presses the ESC key.
  */
 function StopEditEvent() {
+  parent.destroyBoundaryReUsage();
   // Update the global variables for the active canvas and edit popup bubble:
 
   active_canvas = REST_CANVAS;

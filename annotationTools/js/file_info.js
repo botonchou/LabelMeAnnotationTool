@@ -63,9 +63,8 @@ function file_info() {
                 }
                 if(par_field=='image') {
                     this.im_name = par_value;
-                    if(this.im_name.indexOf('.jpg')==-1 && this.im_name.indexOf('.png')==-1) {
-                        this.im_name = this.im_name + '.jpg';
-                    }
+		    if (! /\.jpg$|\.png$/i.test(this.im_name) )
+		      this.im_name = this.im_name + '.jpg';
                 }
                 if(par_field=='hitId') {
                     this.hitId = par_value;
