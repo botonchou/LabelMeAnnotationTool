@@ -325,7 +325,7 @@ function annotation(anno_id) {
                     pt[0] = xt;
                     pt[1] = yt;
                     pt[2] = thisdist;
-		    pt[3] = {i: i, j: j};
+		    pt[3] = {i: i, j: j};   /* FIXME */
                 }
             }
         }
